@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#635bff">
+  <meta name="description" content="Discover free online tools with SnapTools. Count words, convert text case, and generate secure random passwords quickly and easily.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="SnapTools">
+  <meta property="og:title" content="SnapTools — Free Online Tools">
+  <meta property="og:description" content="Discover free online tools with SnapTools. Count words, convert text case, and generate secure random passwords quickly and easily.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SnapTools">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SnapTools — Free Online Tools">
+  <meta name="twitter:description" content="Discover free online tools with SnapTools. Count words, convert text case, and generate secure random passwords quickly and easily.">
+  <title>SnapTools — Free Online Tools</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="SnapTools home"><span class="brand-mark">S</span> SnapTools</a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#tools">Free tools</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#privacy">Privacy</a>
+    </nav>
+    <a class="header-cta" href="#tools">Try it free <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="status-dot"></span> FREE ONLINE IMAGE TOOLS</div>
+      <h1>Your images.<br><span>Smaller, sharper, ready.</span></h1>
+      <p class="hero-copy">Compress and resize images in seconds. Simple tools, no account, and your files stay on your device.</p>
+      <div class="hero-actions">
+        <a class="primary-button" href="#tools">Start with an image <span aria-hidden="true">→</span></a>
+        <span class="trust-note"><span aria-hidden="true">✓</span> Free to use · Browser-based</span>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-card art-card-back"><span class="art-sun"></span><span class="art-hill hill-one"></span><span class="art-hill hill-two"></span></div>
+        <div class="art-card art-card-front"><span class="art-sun"></span><span class="art-hill hill-one"></span><span class="art-hill hill-two"></span><span class="art-label">IMAGE READY</span></div>
+        <div class="floating-chip chip-top">↘ 72% smaller</div>
+        <div class="floating-chip chip-bottom"><span class="tiny-check">✓</span> Processed privately</div>
+      </div>
+    </section>
+
+    <section class="tools-section section-wrap" id="tools">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">YOUR TOOLKIT</div>
+          <h2>What would you like to do?</h2>
+        </div>
+        <p>Choose a tool, add your image, and download the result.</p>
+      </div>
+
+      <div class="tool-layout">
+        <aside class="tool-sidebar" aria-label="Choose image tool">
+          <button class="tool-tab active" data-mode="compress" type="button"><span class="tool-icon">◉</span><span><strong>Compress image</strong><small>Reduce file size</small></span><span class="tab-arrow">→</span></button>
+          <button class="tool-tab" data-mode="resize" type="button"><span class="tool-icon">↗</span><span><strong>Resize image</strong><small>Change dimensions</small></span><span class="tab-arrow">→</span></button>
+          <button class="tool-tab" data-mode="convert" type="button"><span class="tool-icon">⇄</span><span><strong>Convert format</strong><small>JPG, PNG, WebP</small></span><span class="tab-arrow">→</span></button>
+        </aside>
+
+        <div class="tool-panel">
+          <div class="panel-heading">
+            <div><h3 id="tool-title">Compress your image</h3><p id="tool-description">Make your image file smaller while keeping it looking good.</p></div>
+            <span class="free-pill">100% FREE</span>
+          </div>
+
+          <label class="drop-zone" id="drop-zone" for="image-input">
+            <input id="image-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp" hidden>
+            <span class="upload-symbol">↑</span>
+            <strong>Drop an image here, or <span>browse files</span></strong>
+            <small>JPG, PNG, WebP, GIF or BMP · Best results with JPG, PNG and WebP</small>
+          </label>
+
+          <div class="workspace hidden" id="workspace">
+            <div class="file-summary">
+              <div class="file-thumb" id="file-thumb">IMG</div>
+              <div class="file-info"><strong id="file-name">image.jpg</strong><span id="file-details">1200 × 800 · 250 KB</span></div>
+              <button class="text-button" id="remove-image" type="button">Remove</button>
+            </div>
+
+            <div class="settings" id="compress-settings">
+              <div class="setting-line"><label for="quality">Image quality</label><strong id="quality-value">80%</strong></div>
+              <input id="quality" type="range" min="20" max="100" value="80">
+              <div class="range-labels"><span>Smaller file</span><span>Higher quality</span></div>
+            </div>
+
+            <div class="settings hidden" id="resize-settings">
+              <div class="dimension-grid">
+                <label>Width (px)<input id="width-input" type="number" min="1" max="12000" placeholder="Width"></label>
+                <label>Height (px)<input id="height-input" type="number" min="1" max="12000" placeholder="Height"></label>
+              </div>
+              <label class="check-line"><input id="keep-ratio" type="checkbox" checked> Keep aspect ratio</label>
+            </div>
+
+            <div class="settings hidden" id="convert-settings">
+              <label class="select-label" for="format-select">Output format</label>
+              <select id="format-select"><option value="image/webp">WebP (recommended)</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select>
+              <p class="small-help">Note: JPG does not support transparency. Transparent areas become white.</p>
+            </div>
+
+            <div class="result-box hidden" id="result-box" aria-live="polite">
+              <div><span class="result-label">YOUR RESULT</span><strong id="result-title">Ready to download</strong><p id="result-details"></p></div>
+              <span class="result-badge" id="result-badge">READY</span>
+            </div>
+            <div class="tool-actions">
+              <button class="primary-button" id="process-button" type="button">Process image <span aria-hidden="true">→</span></button>
+              <button class="secondary-button hidden" id="download-button" type="button">Download image ↓</button>
+            </div>
+            <p class="error-message hidden" id="error-message" role="alert"></p>
+          </div>
+          <p class="privacy-note"><span aria-hidden="true">♢</span> Your image is processed locally in your browser. It is not uploaded to SnapTools.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section section-wrap" id="how-it-works">
+      <div class="section-heading centered">
+        <div class="eyebrow">MADE TO BE SIMPLE</div>
+        <h2>Less hassle. More creating.</h2>
+        <p>Useful image tools without unnecessary steps.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card"><span class="feature-icon purple">⚡</span><h3>Quick results</h3><p>Process supported images directly in your browser without waiting for an upload.</p></article>
+        <article class="feature-card"><span class="feature-icon mint">⌁</span><h3>Private by design</h3><p>Your selected image stays on your device while you use these browser-based tools.</p></article>
+        <article class="feature-card"><span class="feature-icon peach">♡</span><h3>Free and simple</h3><p>No account or subscription is needed to use this starter version.</p></article>
+      </div>
+    </section>
+
+    <section class="privacy-banner section-wrap" id="privacy">
+      <div class="privacy-symbol">✓</div>
+      <div><h2>Your files stay yours.</h2><p>SnapTools uses your browser to process images locally. Choose files you trust and keep a copy of your original image.</p></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a class="brand" href="#"><span class="brand-mark">S</span> SnapTools</a><span>Free image tools, made simple.</span><span>© <span id="year"></span> SnapTools</span></footer>
+</body>
+</html>
