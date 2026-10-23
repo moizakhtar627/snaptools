@@ -20,8 +20,12 @@
   const resultDetails = $("#result-details");
   const resultBadge = $("#result-badge");
   const errorMessage = $("#error-message");
+  const downloadFormat = $("#download-format");
+  const downloadFormatWrap = $("#download-format-wrap");
 
   let mode = "compress";
+  let processedWidth = 0;
+  let processedHeight = 0;
   let selectedFile = null;
   let sourceImage = null;
   let outputBlob = null;
@@ -51,6 +55,7 @@
     outputBlob = null;
     downloadButton.classList.add("hidden");
     resultBox.classList.add("hidden");
+    downloadFormatWrap.classList.add("hidden");
   };
 
   function setMode(nextMode) {
@@ -186,6 +191,9 @@
         type = selectedFile.type === "image/png" ? "image/webp" : "image/webp";
       }
 
+      processedWidth = width;
+      processedHeight = height;
+
       const canvas = document.createElement("canvas");
       canvas.width = width;
       canvas.height = height;
@@ -214,6 +222,7 @@
       resultBox.classList.remove("hidden");
       downloadButton.classList.remove("hidden");
       downloadButton.textContent = `Download ${extension.toUpperCase()} ↓`;
+      downloadFormatWrap.classList.toggle("hidden", mode === "convert");
     } catch (error) {
       showError(error.message || "Something went wrong. Please try another image.");
     } finally {
@@ -223,15 +232,50 @@
   }
 
   processButton.addEventListener("click", processImage);
-  downloadButton.addEventListener("click", () => {
+  downloadButton.addEventListener("click", async () => {
     if (!outputBlob) return;
-    const url = URL.createObjectURL(outputBlob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = outputName;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    clearError();
+    try {
+      let blobToDownload = outputBlob;
+      let name = outputName;
+
+      if (mode !== "convert") {
+        const format = downloadFormat.value;
+        if (!sourceImage || !processedWidth || !processedHeight) {
+          throw new Error("Image data not available. Please re-process the image.");
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = processedWidth;
+        canvas.height = processedHeight;
+        const context = canvas.getContext("2d", { alpha: format !== "image/jpeg" });
+        if (!context) {
+          throw new Error("Your browser could not process the image for download.");
+        }
+        if (format === "image/jpeg") {
+          context.fillStyle = "#ffffff";
+          context.fillRect(0, 0, processedWidth, processedHeight);
+        }
+        context.drawImage(sourceImage, 0, 0, processedWidth, processedHeight);
+        const q = format === "image/jpeg" ? (mode === "compress" ? Number(quality.value) / 100 : 0.9) : undefined;
+        blobToDownload = await canvasToBlob(canvas, format, q);
+        if (!blobToDownload) {
+          throw new Error("This format could not be created by your browser. Try a different format.");
+        }
+        const extension = format === "image/jpeg" ? "jpg" : "png";
+        const baseName = selectedFile.name.replace(/\.[^.]+$/, "").replace(/[^\w-]+/g, "-") || "image";
+        name = `${baseName}-snaptools.${extension}`;
+      }
+
+      const url = URL.createObjectURL(blobToDownload);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = name;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (error) {
+      showError(error.message || "Something went wrong while preparing the download.");
+    }
   });
 })();

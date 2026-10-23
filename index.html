@@ -108,6 +108,13 @@
             </div>
             <div class="tool-actions">
               <button class="primary-button" id="process-button" type="button">Process image <span aria-hidden="true">→</span></button>
+              <div class="hidden" id="download-format-wrap">
+                <label class="select-label" for="download-format">Download format</label>
+                <select id="download-format">
+                  <option value="image/png">PNG</option>
+                  <option value="image/jpeg">JPG</option>
+                </select>
+              </div>
               <button class="secondary-button hidden" id="download-button" type="button">Download image ↓</button>
             </div>
             <p class="error-message hidden" id="error-message" role="alert"></p>
